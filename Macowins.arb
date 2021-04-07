@@ -1,0 +1,72 @@
+
+class Prenda
+
+    @Precio_original 
+    @Status 
+    @Precio_final
+
+    def Precio_original
+        @Precio_original
+    end
+
+    def Status
+        @Status
+    end
+
+    def Precio_final
+        if(prenda.Status == "Nueva") 
+            @Precio_final = prenda.Precio_original
+        end
+        if(prenda.Status == "Promocion")
+            @Precio_final = prenda.Precio_original - gets.chomp
+        end
+        if(prenda.Status == "Liquidacion")
+            @Precio_final = prenda.Precio_original/2
+        end
+    end
+end
+
+class Saco < Prenda
+
+end
+
+class Pantalon < Prenda
+
+end
+
+class Camisa < Prenda
+
+end    
+
+class Venta
+    @Fecha
+    @Importe
+    @Prendas= []
+    
+    def Initialize
+        @Fecha = Time.day
+    end
+
+    def Nueva_Venta_Efectivo prenda, cant
+        @Importe = prenda.Precio_final * cant
+    end
+
+    def Nueva_venta_Tarjeta prenda, cant, cuotas
+        coeficioente_de_recargo
+        recargo = cuotas*coeficioente_de_recargo*0.01*prenda.Precio_final
+        @Importe = prenda.Precio_final * cant * recargo
+    end
+end
+class Macowins
+    @prendas = []
+    @ventas = []
+    def Agregar_Venta(venta)
+        venta = new Venta
+        @ventas.push venta
+    end
+    def Ganancia_Dia dia
+        ventas_dia = ventas.Select {|venta| venta.Fecha == dia}
+        print ventas_dia
+    end
+end
+
